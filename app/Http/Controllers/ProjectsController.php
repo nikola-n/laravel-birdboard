@@ -19,14 +19,15 @@ class ProjectsController extends Controller
     {
         return view('projects.show', compact('project'));
     }
+
     public function store()
     {
-       $attributes = request()->validate([
+        $attributes = request()->validate([
             'title'       => 'required',
             'description' => 'required',
         ]);
 
-        Project::create($attributes);
+        auth()->user()->projects()->create($attributes);
 
         return redirect()->route('projects.index');
     }

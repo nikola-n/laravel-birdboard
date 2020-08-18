@@ -12,8 +12,17 @@ class ProjectsTest extends TestCase
     use RefreshDatabase, WithFaker;
 
     /** @test */
+    public function only_authenticated_users_can_create_projects()
+    {
+        $attributes = factory(Project::class)->raw();
+
+        $this->post('/projects', $attributes)->assertRedirect('login');
+    }
+
+    /** @test */
     public function a_user_can_create_a_project()
     {
+        $this->actingAs(factory('App\User')->create());
         //will show the route exception, otherwise it will skipp and go to the project check
         $this->withExceptionHandling();
 
@@ -42,6 +51,7 @@ class ProjectsTest extends TestCase
     /** @test */
     public function a_project_requires_a_title()
     {
+        $this->actingAs(factory('App\User')->create());
         $attributes = factory(Project::class)->raw(['title' => '']);
         $this->post('/projects', $attributes)->assertSessionHasErrors('title');
     }
@@ -49,6 +59,7 @@ class ProjectsTest extends TestCase
     /** @test */
     public function a_project_requires_a_description()
     {
+        $this->actingAs(factory('App\User')->create());
         $attributes = factory(Project::class)->raw(['description' => '']);
         $this->post('/projects', $attributes)->assertSessionHasErrors('description');
     }
