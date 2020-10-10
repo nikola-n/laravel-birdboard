@@ -1,8 +1,16 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "~tailwindcss/base.css";
+
+@import "~tailwindcss/components.css";
+
+@import "~tailwindcss/utilities.css";
+
+.button {
+    @apply bg-blue-400 text-white no-underline rounded-lg shadow-lg text-sm py-2 px-5;
+}
+
+.cards {
+    @apply bg-white p-5 rounded-lg shadow;
+}
