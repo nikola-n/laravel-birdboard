@@ -13,6 +13,8 @@ class Task extends Model
         return $this->belongsTo(Project::class);
     }
 
+    protected $touches = ['project'];
+
     public function path()
     {
         return "/projects/{$this->project->id}/tasks/{$this->id}";
