@@ -13,6 +13,28 @@ class Task extends Model
     protected $guarded = [];
 
     /**
+     * return void
+     */
+    protected static function booted()
+    {
+        static::created(function ($task) {
+            $task->project->recordActivity('created_task');
+        });
+
+    }
+
+    /**
+     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\Request|string
+     */
+    public function complete()
+    {
+        $this->update(['completed' => true]);
+
+        $this->project->recordActivity('completed_task');
+    }
+
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function project()
@@ -24,6 +46,13 @@ class Task extends Model
      * @var string[]
      */
     protected $touches = ['project'];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'completed' => 'boolean',
+    ];
 
     /**
      * @return string
