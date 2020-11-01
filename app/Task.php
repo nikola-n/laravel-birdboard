@@ -13,17 +13,6 @@ class Task extends Model
     protected $guarded = [];
 
     /**
-     * return void
-     */
-    protected static function booted()
-    {
-        static::created(function ($task) {
-            $task->project->recordActivity('created_task');
-        });
-
-    }
-
-    /**
      * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\Request|string
      */
     public function complete()
@@ -40,7 +29,7 @@ class Task extends Model
     {
         $this->update(['completed' => false]);
 
-        //$this->project->recordActivity('incompleted_task');
+        $this->project->recordActivity('incompleted_task');
     }
 
 
