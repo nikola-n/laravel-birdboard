@@ -33,6 +33,16 @@ class Task extends Model
         $this->project->recordActivity('completed_task');
     }
 
+    /**
+     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\Request|string
+     */
+    public function incomplete()
+    {
+        $this->update(['completed' => false]);
+
+        //$this->project->recordActivity('incompleted_task');
+    }
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
