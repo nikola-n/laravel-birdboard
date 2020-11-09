@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -25,7 +28,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -45,7 +49,27 @@ class User extends Authenticatable
         return $this->hasMany(Project::class, 'owner_id')
             //->orderByDesc('updated_at');
             //    ->oldest('updated_at'); //asc
-        ->latest('updated_at'); //desc
+            ->latest('updated_at'); //desc
+    }
+
+    public function accessibleProjects()
+    {
+        //2.way
+        return Project::where('owner_id', $this->id)
+            ->orWhereHas('members', function ($query) {
+                $query->where('user_id', $this->id);
+            })
+            ->get();
+
+        //1. way
+        //$projectsCreated = $this->projects;
+        //
+        //$ids = DB::table('project_members')->where('user_id', $this->id)
+        //    ->pluck('project_id');
+        //
+        //$projectsSharedWith = Project::find($ids);
+        //
+        //return $projectsCreated->merge($projectsSharedWith);
     }
 
 }

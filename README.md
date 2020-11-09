@@ -22,3 +22,5 @@
 Morph one to many relationship for tasks
 
 If we want to know what's changed we need to record model changes
+
+A project can invite users

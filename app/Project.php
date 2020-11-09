@@ -58,6 +58,22 @@ class Project extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'project_members', 'project_id', 'user_id')->withTimestamps();
+    }
+
+    /**
+     * @param \App\User $user
+     */
+    public function invite(User $user)
+    {
+        $this->members()->attach($user);
+    }
+
+    /**
      * Prepare a date for array / JSON serialization.
      *
      * @param \DateTimeInterface $date

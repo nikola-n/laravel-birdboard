@@ -34,12 +34,10 @@ class Activity extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getUsernameAttribute()
     {
-        if (auth()->user() == $this->user) {
+        if(auth()->user()->projects !== $this->user->projects)  {
             return 'You';
         }
         return $this->user->name;

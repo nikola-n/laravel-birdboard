@@ -34,7 +34,7 @@ class ProjectTasksController extends Controller
      */
     public function update(Project $project, Task $task)
     {
-        $this->authorize('update', $project);
+        $this->authorize($task->project);
 
         $task->update(request()->validate(['body' => 'required']));
 
