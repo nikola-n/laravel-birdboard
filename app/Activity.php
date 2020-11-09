@@ -25,4 +25,23 @@ class Activity extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsernameAttribute()
+    {
+        if (auth()->user() == $this->user) {
+            return 'You';
+        }
+        return $this->user->name;
+    }
 }
