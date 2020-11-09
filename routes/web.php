@@ -18,12 +18,14 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('projects', 'ProjectsController@index')->name('projects.index');
-    Route::get('projects/create', 'ProjectsController@create')->name('projects.create');
-    Route::get('projects/{project}', 'ProjectsController@show')->name('project.show');
-    Route::get('projects/{project}/edit', 'ProjectsController@edit')->name('projects.edit');
-    Route::patch('projects/{project}', 'ProjectsController@update')->name('project.update');
-    Route::post('projects', 'ProjectsController@store')->name('projects.store');
+    Route::resource('projects', 'ProjectsController');
+    //Route::get('projects', 'ProjectsController@index')->name('projects.index');
+    //Route::get('projects/create', 'ProjectsController@create')->name('projects.create');
+    //Route::get('projects/{project}', 'ProjectsController@show')->name('project.show');
+    //Route::get('projects/{project}/edit', 'ProjectsController@edit')->name('projects.edit');
+    //Route::patch('projects/{project}', 'ProjectsController@update')->name('project.update');
+    //Route::post('projects', 'ProjectsController@store')->name('projects.store');
+    //Route::delete('projects/{project}', 'ProjectsController@destroy')->name('projects.destroy');
 
     Route::post('projects/{project}/tasks', 'ProjectTasksController@store')->name('project.task.store');
     Route::patch('/projects/{project}/tasks/{task}', 'ProjectTasksController@update')->name('project.task.update');

@@ -79,6 +79,21 @@ class ProjectsController extends Controller
     }
 
     /**
+     * @param \App\Project $project
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
+     */
+    public function destroy(Project $project)
+    {
+        $this->authorize('update', $project);
+
+        $project->delete();
+
+        return redirect('projects');
+    }
+
+    /**
      * @return array
      */
     protected function validateRequest()
@@ -89,4 +104,5 @@ class ProjectsController extends Controller
             'notes'       => 'nullable',
         ]);
     }
+
 }
