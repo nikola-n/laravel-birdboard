@@ -15,5 +15,10 @@
 - completed
 
 # Activity (Project Activity and Task Activity)
-- project_id belongsTo
-- description
+- project_id 
+- subject_id (task_id || project_id)
+- subject_type (Task || Project model)
+- description 
+Morph one to many relationship for tasks
+
+If we want to know what's changed we need to record model changes

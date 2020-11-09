@@ -2,15 +2,22 @@
 
 namespace App;
 
+use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+    use RecordsActivity;
 
     /**
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * @var string[]
+     */
+    protected static $recordableEvents = ['created', 'deleted'];
 
     /**
      * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\Request|string
@@ -61,22 +68,4 @@ class Task extends Model
         return "/projects/{$this->project->id}/tasks/{$this->id}";
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function activity()
-    {
-        return $this->morphMany(Activity::class, 'subject')->latest();
-    }
-
-    /**
-     * @param $description
-     */
-    public function recordActivity($description)
-    {
-        $this->activity()->create([
-            'project_id' => $this->project_id,
-            'description' => $description,
-        ]);
-    }
 }

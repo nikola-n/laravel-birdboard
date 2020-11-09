@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Traits\RecordsActivity;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    use RecordsActivity;
 
     /**
      * @var array
@@ -55,10 +58,14 @@ class Project extends Model
     }
 
     /**
-     * @param $description
+     * Prepare a date for array / JSON serialization.
+     *
+     * @param \DateTimeInterface $date
+     *
+     * @return string
      */
-    public function recordActivity($description)
+    protected function serializeDate(DateTimeInterface $date)
     {
-        $this->activity()->create(compact('description'));
+        return $date->format('Y-m-d H:i:s');
     }
 }

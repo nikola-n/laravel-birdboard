@@ -12,6 +12,13 @@ class Activity extends Model
     protected $guarded = [];
 
     /**
+     * @var string[]
+     */
+    protected $casts = [
+        'changes' => 'array',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function subject()
