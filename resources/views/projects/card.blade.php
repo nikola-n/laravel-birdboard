@@ -3,11 +3,13 @@
         <a href="{{ $project->path() }}" class="text-black no-underline">{{ $project->title }}</a>
     </h3>
     <div class="text-grey mb-4 flex-1">{{ str_limit($project->description, 50) }}</div>
-    <footer>
-        <form action="{{ route('projects.destroy', $project) }}" method="POST" class="text-right">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="text-xs">Delete</button>
-        </form>
-    </footer>
+    @can('manage', $project)
+        <footer>
+            <form action="{{ route('projects.destroy', $project) }}" method="POST" class="text-right">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="text-xs">Delete</button>
+            </form>
+        </footer>
+    @endcan
 </div>
