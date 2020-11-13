@@ -7,10 +7,16 @@
 
 @import "~tailwindcss/utilities.css";
 
-.button {
-    @apply bg-blue-400 text-white no-underline rounded-lg shadow-lg text-sm py-2 px-5;
+@import "themes/light";
+@import "themes/dark";
+
+@import "components/button";
+@import "components/cards";
+
+body, button {
+    @apply .text-default;
 }
 
-.cards {
-    @apply bg-white p-5 rounded-lg shadow;
+.section {
+    @apply .px-8;
 }
