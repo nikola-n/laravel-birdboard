@@ -34,12 +34,22 @@ class ProjectsController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store()
     {
         $project = auth()->user()->projects()->create($this->validateRequest());
 
+        if($tasks = request('tasks')) {
+            $project->addTasks($tasks);
+            //foreach(request('tasks') as $task) {
+            //    $project->addTask($task['body']);
+            //}
+        }
+
+        if (request()->wantsJson()) {
+            return ['message' => $project->path()];
+        }
         return redirect($project->path());
     }
 
